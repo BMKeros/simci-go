@@ -12,4 +12,5 @@ func SetUserRoutes(router *gin.RouterGroup, db *gorm.DB) {
 	controllerUser := controllers.NewUserController(db)
 
 	userRouter.GET("", controllerUser.GetAll)
+	userRouter.POST("", controllerUser.Create)
 }
