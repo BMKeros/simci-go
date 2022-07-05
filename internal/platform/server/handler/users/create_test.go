@@ -45,9 +45,10 @@ func TestCreate(t *testing.T) {
 
 	t.Run("given an valid request it returns 201", func(t *testing.T) {
 		newUserRequest := createUserRequest{
-			ID:    "8a1c5cdc-ba57-445a-994d-aa412d23723f",
-			Name:  "Testing",
-			Email: "testing@test.com",
+			ID:       "8a1c5cdc-ba57-445a-994d-aa412d23723f",
+			Name:     "Testing",
+			Email:    "testing@test.com",
+			Password: "testing",
 		}
 
 		data, err := json.Marshal(newUserRequest)

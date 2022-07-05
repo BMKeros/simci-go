@@ -7,9 +7,10 @@ import (
 )
 
 type createUserRequest struct {
-	ID    string `json:"id" binding:"required"`
-	Name  string `json:"name" binding:"required"`
-	Email string `json:"email" binding:"required"`
+	ID       string `json:"id" binding:"required"`
+	Name     string `json:"name" binding:"required"`
+	Email    string `json:"email" binding:"required"`
+	Password string `json:"password" binding:"required"`
 }
 
 // @BasePath /api
@@ -33,9 +34,16 @@ func Create(repository domain.UserRepository) gin.HandlerFunc {
 			return
 		}
 
-		newUser := domain.NewUser(user.ID, user.Name, user.Email, "")
+		newUser, err := domain.NewUser(user.ID, user.Name, user.Email, user.Password)
 
-		err := repository.Save(c, newUser)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"message": "Malformed payload",
+			})
+			return
+		}
+
+		err = repository.Save(c, newUser)
 
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{
