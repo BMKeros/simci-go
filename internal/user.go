@@ -1,5 +1,13 @@
 package internal
 
+import "context"
+
+type UserRepository interface {
+	Save(ctx context.Context, user User) error
+}
+
+//go:generate mockery --case=snake --outpkg=storagemocks --output=platform/storage/storagemocks --name=UserRepository
+
 type User struct {
 	id       string
 	name     string
